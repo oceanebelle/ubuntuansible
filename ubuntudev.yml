@@ -1,0 +1,9 @@
+- name: "Setup development environment on ubuntu"
+  hosts: localhost
+  connection: local
+
+  roles:
+    - common
+    - java
+    - devtools
+    - vscode

@@ -1,0 +1,8 @@
+---
+- name: Install postman
+  become: yes
+  snap:
+    name: 
+      - postman
+      - dbeaver-ce
+
