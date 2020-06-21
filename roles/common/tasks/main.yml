@@ -7,28 +7,20 @@
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
   become: yes
+  register: cansudo
 
-- name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
-  apt:
+- name: Apt update
+  apt: 
     name: "*"
-    update_cache: yes
-    cache_valid_time: 3600
-  become: yes  
+    state: latest
+  become: yes
+  notify: 
+    - upgrade apt
+    - clean apt
+    - remove apt 
+  when: cansudo is not changed
 
-- name: Update all packages to the latest version
-  apt:
-    upgrade: dist
-  become: yes  
-
-- name: Remove useless packages from the cache
-  apt:
-    autoclean: yes
-  become: yes  
-
-- name: Remove dependencies that are no longer required
-  apt:
-    autoremove: yes    
-  become: yes  
+- meta: flush_handlers  
 
 - name: Install packages
   apt:
@@ -40,3 +32,23 @@
     - git
     state: present
   become: yes
+  when: cansudo is not changed
+
+- name: Check if ssh exists
+  stat:
+    path: ~/.ssh
+  notify:
+    - add ssh directory
+    - add ssh authorized_keys
+    - add ssh config
+  register: ssh_details 
+  changed_when:
+    - ssh_details.stat.exists == False 
+
+- debug: 
+    msg: The file {{ ssh_details.stat.path  }} exists is {{ ssh_details.stat.exists  }}
+
+- meta: flush_handlers      
+
+
+

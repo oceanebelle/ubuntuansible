@@ -1,0 +1,40 @@
+---
+- name: add ssh directory
+  file:
+    path=/home/{{ ansible_user }}/.ssh
+    state=directory
+    mode=0700
+    owner={{ ansible_user }}
+    group={{ ansible_user|default(ansible_user)  }}
+
+- name: add ssh authorized_keys
+  file:
+    path=/home/{{ ansible_user }}/.ssh/authorized_keys
+    state=touch
+    mode=0644
+    owner={{ ansible_user }}
+    group={{ ansible_user|default(ansible_user)  }}
+
+- name: add ssh config
+  template:
+    src: config.j2
+    dest: /home/{{ ansible_user }}/.ssh/config
+    mode: '0644'
+    backup: yes
+
+- name: upgrade apt
+  apt:
+    upgrade: dist
+  become: yes
+
+- name: clean apt
+  apt:
+    autoclean: yes
+  become: yes  
+
+- name: remove apt
+  apt:
+    autoremove: yes    
+  become: yes      
+
+
