@@ -1,8 +1,9 @@
 ---
-- name: Install postman
+- name: Install apps
+  tags: desktop
   become: yes
   snap:
     name: 
       - postman
       - dbeaver-ce
-
+  
