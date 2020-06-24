@@ -25,8 +25,8 @@
   lineinfile: 
     path: ~/.profile
     state: present
-    regexp: '^JAVA_HOME='
-    line: "JAVA_HOME={{ javahomedir }}"
+    regexp: '^export JAVA_HOME='
+    line: "export JAVA_HOME={{ javahomedir }}"
   register: profile  
 
 - name: source profile

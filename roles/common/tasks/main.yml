@@ -30,6 +30,7 @@
     - wget
     - keepassxc
     - git
+    - thrift-compiler
     state: present
   become: yes
   when: cansudo is not changed
