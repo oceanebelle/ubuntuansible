@@ -5,5 +5,4 @@
   roles:
     - common
     - java
-#    - devtools
-#    - vscode
+    - devtools

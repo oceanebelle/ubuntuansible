@@ -3,7 +3,18 @@
   tags: desktop
   become: yes
   snap:
+    classic: yes
     name: 
       - postman
-      - dbeaver-ce
+      - dbeaver-ce      
+  
+
+- name: Install snap apps with classic confinement
+  tags: desktop
+  become: yes
+  snap:
+    classic: yes
+    name: 
+      - code
+      - intellij-idea-community
   
