@@ -1,6 +1,12 @@
 - name: "Setup development environment on ubuntu"
   hosts: localhost
   connection: local
+  gather_facts: yes
+
+  vars:
+    maven_home: "{{ lookup('env','MAVEN_HOME') }}"
+    java_home: "{{ lookup('env','JAVA_HOME') }}"
+    profile_path: "~/.profile"
 
   roles:
     - common

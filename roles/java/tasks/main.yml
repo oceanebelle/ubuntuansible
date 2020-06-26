@@ -1,34 +1,37 @@
 ---
-- name: Install JDK 11
-  apt:
-    pkg:
-    - openjdk-11-jdk-headless
-    - openjdk-11-source
-    - maven
-    state: present
-  become: yes
+- name: Check if jdk is installed
+  shell: which javac
+  register: has_java
+  check_mode: no
+  notify:
+  - install java and maven
+  changed_when:
+    - has_java.rc == 1
+
+- meta: flush_handlers      
 
 - name: fetch maven home
   shell: update-alternatives --display mvn | grep "currently" | sed -n 's/.* \(\/.*\)\/bin\/.*/\1/p'
-  register: mavendir
-- debug: var=mavendir.stdout_lines
+  register: mavenhomedir
+  changed_when: 
+    - maven_home | length == 0
+  notify:
+    - set maven home  
+    - source profile
+- debug: var=mavenhomedir.stdout_lines
+
+- meta: flush_handlers        
 
 - name: fetch java home
   shell: update-alternatives --display javac | grep "currently" | sed -n 's/.* \(\/.*\)\/bin\/java.*/\1/p'
   register: javahomedir
+  changed_when: 
+    - java_home | length == 0
+  notify:
+    - set java home
+    - source profile    
 - debug: var=javahomedir.stdout_lines
 
-- set_fact: 
-    javahomedir={{ javahomedir.stdout }}
+- meta: flush_handlers        
 
-- name: Check JAVA_HOME is set
-  lineinfile: 
-    path: ~/.profile
-    state: present
-    regexp: '^export JAVA_HOME='
-    line: "export JAVA_HOME={{ javahomedir }}"
-  register: profile  
 
-- name: source profile
-  shell: . ~/.profile
-  when: profile.changed

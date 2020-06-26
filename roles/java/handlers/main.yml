@@ -1,0 +1,26 @@
+---
+- name: install java and maven
+  apt:
+    pkg:
+    - openjdk-11-jdk-headless
+    - openjdk-11-source
+    - maven
+    state: present
+  become: yes
+
+- name: set maven home
+  lineinfile: 
+    path: "{{ profile_path }}"
+    state: present
+    regexp: '^MAVEN_HOME='
+    line: "MAVEN_HOME={{ mavenhomedir.stdout }}"
+
+- name: set java home
+  lineinfile: 
+    path: "{{ profile_path }}"
+    state: present
+    regexp: '^JAVA_HOME='
+    line: "JAVA_HOME={{ javahomedir.stdout }}"    
+
+- name: source profile
+  shell: ". {{ profile_path }}"
