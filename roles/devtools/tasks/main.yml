@@ -26,6 +26,8 @@
   - update desktop snaps
   changed_when:
     - snaps_update.stdout_lines | length > 0 
+    
 - debug: var=snaps_update.stdout_lines
+  tags: desktop
 
 - meta: flush_handlers      
