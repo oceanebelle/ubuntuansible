@@ -1,7 +1,0 @@
----
-- name: Install Visual Studio Code from Snap
-  tags: desktop
-  become: yes
-  snap:
-    name: code
-    classic: yes

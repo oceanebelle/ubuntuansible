@@ -6,8 +6,7 @@
     classic: yes
     name: 
       - postman
-      - dbeaver-ce      
-  
+      - dbeaver-ce     
 
 - name: Install snap apps with classic confinement
   tags: desktop
@@ -18,3 +17,15 @@
       - code
       - intellij-idea-community
   
+- name: Check for updates from snap
+  tags: desktop
+  become: yes
+  shell: snap refresh --list | sed -n '2,$p' | sed -n 's/\([^[:space:]]*\).*/\1/p'
+  register: snaps_update
+  notify: 
+  - update desktop snaps
+  changed_when:
+    - snaps_update.stdout_lines | length > 0 
+- debug: var=snaps_update.stdout_lines
+
+- meta: flush_handlers      

@@ -1,0 +1,9 @@
+---
+- name: update desktop snaps
+  become: yes
+  shell: snap refresh {{ item }}
+  loop: "{{ snaps_update.stdout_lines }}"
+
+
+
+
