@@ -1,4 +1,4 @@
-- name: "Setup docker ubuntu"
+- name: "Setup docker ubuntu or debian"
   hosts: localhost
   connection: local
   gather_facts: yes
