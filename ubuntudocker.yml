@@ -1,0 +1,12 @@
+- name: "Setup docker ubuntu"
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: docker
+
+  vars:
+    ubuntu_name: bionic
+
+  roles:
+    - role: docker
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'

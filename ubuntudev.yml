@@ -1,4 +1,4 @@
-- name: "Setup development environment on ubuntu"
+- name: "Setup dev environment on ubuntu"
   hosts: localhost
   connection: local
   gather_facts: yes
@@ -12,7 +12,4 @@
     - role: common
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
     - role: java
-      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-    - role: devtools
-      tags: desktop
-      when: ansible_distribution == 'Ubuntu'
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'    

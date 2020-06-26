@@ -20,7 +20,7 @@
   shell: snap refresh --list | sed -n '2,$p' | sed -n 's/\([^[:space:]]*\).*/\1/p'
   register: snaps_update
   notify: 
-  - update desktop snaps
+  - update snaps
   changed_when:
     - snaps_update.stdout_lines | length > 0 
     

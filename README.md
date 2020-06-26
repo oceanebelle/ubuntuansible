@@ -22,6 +22,6 @@ Items
 - [x] Add java and maven including environment variables
 - [x] Add Ubuntu snap packages for most used tools
 - [x] Add refresh for snap packages
-- [ ] Add docker
+- [x] Add docker
 - [ ] Add crc 
 - [ ] Use inventories directory structure

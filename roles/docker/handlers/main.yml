@@ -1,0 +1,14 @@
+- name: upgrade apt
+  apt:
+    upgrade: dist
+  become: yes
+
+- name: clean apt
+  apt:
+    autoclean: yes
+  become: yes  
+
+- name: remove apt
+  apt:
+    autoremove: yes    
+  become: yes      

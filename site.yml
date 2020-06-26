@@ -1,1 +1,3 @@
 - import_playbook: ubuntudev.yml
+- import_playbook: ubuntudocker.yml
+- import_playbook: ubuntudesktop.yml

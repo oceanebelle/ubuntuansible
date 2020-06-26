@@ -1,0 +1,12 @@
+- name: "Setup development environment on ubuntu desktop"
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: desktop
+
+  vars:
+    profile_path: "~/.profile"
+
+  roles:
+    - role: devtools
+      when: ansible_distribution == 'Ubuntu'

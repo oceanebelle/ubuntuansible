@@ -1,0 +1,73 @@
+---
+- name: Apt update
+  apt: 
+    name: "*"
+    state: latest
+  become: yes
+  notify: 
+    - upgrade apt
+    - clean apt
+    - remove apt 
+
+- name: Ensure old version of docker is not present
+  apt:
+    pkg:
+    - docker 
+    - docker-engine 
+    - docker.io 
+    - containerd 
+    - runc
+    state: absent
+  become: yes
+  notify:
+    - clean apt
+    - remove apt
+
+- name: Install docker pre-requisites
+  apt:
+    update_cache: yes
+    pkg:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+    state: present
+  become: yes
+
+- name: Add docker official GPG Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  register: dockerkey
+  become: yes
+
+# TODO: Uncomment when bionic is present
+#- name: Get ubuntu version
+#  shell: lsb_release -cs
+#  register: ubuntu_name
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_name }} stable"
+    state: present
+  register: add_repo
+  become: yes
+
+- debug: var=add_repo  
+
+- name: Install docker ce
+  apt:
+    update_cache: yes
+    pkg:
+    - docker-ce 
+    - docker-ce-cli 
+    - containerd.io
+    state: present
+  become: yes
+
+- name: Ensure group user is a member of docker
+  group:
+    name: docker
+    state: present  
+  become: no
