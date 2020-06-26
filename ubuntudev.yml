@@ -9,6 +9,10 @@
     profile_path: "~/.profile"
 
   roles:
-    - common
-    - java
-    - devtools
+    - role: common
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - role: java
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - role: devtools
+      tags: desktop
+      when: ansible_distribution == 'Ubuntu'

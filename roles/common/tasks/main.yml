@@ -10,6 +10,7 @@
   register: cansudo
 
 - name: Apt update
+  when: cansudo is not changed
   apt: 
     name: "*"
     state: latest
@@ -18,11 +19,11 @@
     - upgrade apt
     - clean apt
     - remove apt 
-  when: cansudo is not changed
-
+    
 - meta: flush_handlers  
 
 - name: Install packages
+  when: cansudo is not changed
   apt:
     pkg:
     - vim
@@ -33,7 +34,7 @@
     - thrift-compiler
     state: present
   become: yes
-  when: cansudo is not changed
+  
 
 - name: Check if ssh exists
   stat:
@@ -50,6 +51,18 @@
     msg: The file {{ ssh_details.stat.path  }} exists is {{ ssh_details.stat.exists  }}
 
 - meta: flush_handlers      
+
+
+- name: setup git block
+  blockinfile: 
+    path: "{{ profile_path }}"
+    state: present
+    marker: "# {mark} Ansible Managed git prompt"
+    block: | 
+      parse_git_branch() {
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+      }
+      PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
 
 

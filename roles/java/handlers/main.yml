@@ -9,18 +9,23 @@
   become: yes
 
 - name: set maven home
-  lineinfile: 
+  blockinfile: 
     path: "{{ profile_path }}"
     state: present
-    regexp: '^MAVEN_HOME='
-    line: "MAVEN_HOME={{ mavenhomedir.stdout }}"
+    marker: "# {mark} Ansible Managed MAVEN"    
+    block: |
+      MAVEN_HOME={{ mavenhomedir.stdout }}
+      export MAVEN_HOME={{ mavenhomedir.stdout }}
 
 - name: set java home
-  lineinfile: 
+  blockinfile: 
     path: "{{ profile_path }}"
     state: present
-    regexp: '^JAVA_HOME='
-    line: "JAVA_HOME={{ javahomedir.stdout }}"    
+    marker: "# {mark} Ansible Managed JAVA"
+    block: |
+      # Java home 
+      JAVA_HOME={{ javahomedir.stdout }}
+      export JAVA_HOME={{ javahomedir.stdout }}
 
 - name: source profile
   shell: ". {{ profile_path }}"
