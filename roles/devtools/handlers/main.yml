@@ -1,5 +1,5 @@
 ---
-- name: update snaps snaps
+- name: update snaps
   become: yes
   shell: snap refresh {{ item }}
   loop: "{{ snaps_update.stdout_lines }}"
