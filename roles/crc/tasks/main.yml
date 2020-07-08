@@ -1,0 +1,45 @@
+---
+# Check if the crc file exist
+- name: Install packages required by crc
+  apt:
+    pkg:
+    - qemu-kvm
+    - libvirt-daemon
+    - libvirt-daemon-system
+    - keepassxc
+    - network-manager
+    state: present
+  become: yes
+
+- name: Check if CRC is downloaded
+  stat:
+    path: "{{ crc_tmp_file }}"
+  notify:
+    - Download CRC    
+  register: out 
+  changed_when:
+    - out.stat.exists == False
+
+- meta: flush_handlers          
+
+- debug: var=out
+
+- name: Check if CRC is installed
+  stat:
+    path: "{{ crc_install_dir }}/crc"
+  notify:
+    - Create crc install dir
+    - Extract crc into install dir
+    - Set crc binary
+    - Create install symlink
+    - Update executable symlink
+  register: out 
+  changed_when:
+    - out.stat.exists == False  
+
+- meta: flush_handlers        
+
+- debug: var=out
+- debug: var=crc_path
+
+

@@ -1,0 +1,42 @@
+---
+- name: Download CRC
+  get_url:
+    url: "{{ crc_url }}"
+    dest: "{{ crc_tmp_file }}"
+    checksum: "{{ crc_checksum }}"
+  register: out  
+
+
+- name: Create crc install dir
+  file:
+    path: "{{ crc_install_dir }}"  
+    state: directory
+    mode: "u=rw,g=wx,o=rwx"
+  become: yes  
+
+- name: Extract crc into install dir
+  unarchive:
+    src: "{{ crc_tmp_file }}"
+    dest: "{{ crc_install_dir }}" 
+    list_files: yes
+  register: out
+
+- name: Set crc binary
+  set_fact: 
+    crc_path: "{{ crc_install_dir }}/{{ out.files | select('match', '^.+/crc$') | list | join }}"
+
+- name: Create install symlink
+  file:
+    src: "{{ crc_path }}"
+    dest: "{{ crc_install_dir }}/crc"
+    state: link
+    force: yes
+    mode: u+rwx    
+
+- name: Update executable symlink
+  file:
+    src: "{{ crc_install_dir }}/crc"
+    dest: "{{ crc_executable }}"
+    state: link
+    force: yes
+  become: yes

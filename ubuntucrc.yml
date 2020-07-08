@@ -1,0 +1,16 @@
+- name: "Setup docker ubuntu or debian"
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: crc
+
+  vars:
+    crc_url: "https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
+    crc_tmp_file: "/tmp/crc-linux-amd64.tar.xz"
+    crc_checksum: "sha1:a128ce725151041b4d5d407d4b6d637f30ab5336"
+    crc_install_dir: "/usr/lib/openshift"
+    crc_executable: "/usr/bin/crc"
+
+  roles:
+    - role: crc
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
