@@ -58,11 +58,12 @@
     path: "{{ profile_path }}"
     state: present
     marker: "# {mark} Ansible Managed git prompt"
-    block: | 
-      parse_git_branch() {
-        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-      }
-      PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+    block: "{{ lookup('template', 'gitprompt.j2') }}"
 
 
-
+- name: Add aliases to profile
+  blockinfile:  
+    path: "{{ profile_path }}"
+    state: present
+    marker: "# {mark} Ansible Managed aliases"    
+    block: "{{ lookup('template', 'aliases.j2') }}"
