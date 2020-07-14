@@ -15,6 +15,13 @@ ansible-playbook site.yml
 
 # if ui applications are not to be installed
 ansible-playbook site.yml --skip-tags=desktop
+
+
+# creating encrypted files
+ansible-vault create foo.yml
+
+# Running ansible script for crc
+ansible-playbook ubuntucrc.yml --ask-vault-pass
 ```
 
 Items

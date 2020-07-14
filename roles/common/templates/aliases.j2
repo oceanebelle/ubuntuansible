@@ -1,10 +1,1 @@
-alias crc-creds='echo "crc console --credentials" && crc console --credentials'
-
-# Escaping a single quote in an alias: '"'"'
-alias oc-login-dev-creds='crc console --credentials | sed -n "s/.*run '"'"'\(.*\)'"'"'.*/\1/p" | head -n1'
-alias oc-login-adm-creds='crc console --credentials | sed -n "s/.*run '"'"'\(.*\)'"'"'.*/\1/p" | tail -n1'
-
-alias oc-login-dev='$(oc-login-dev-creds)'
-alias oc-login-adm='$(oc-login-adm-creds)'
-
-alias crc-start='crc start && oc-login-dev && oc status'
+# nothing yet

@@ -11,35 +11,64 @@
     state: present
   become: yes
 
-- name: Check if CRC is downloaded
-  stat:
-    path: "{{ crc_tmp_file }}"
+- name: Confirm updating of CRC
+  pause: 
+    prompt: "Do you want to download and update your CRC? (yes/no)"  
+  register: crc_update  
+
+- name: Cleanup old CRC VM
+  debug: var=crc_update
   notify:
-    - Download CRC    
-  register: out 
-  changed_when:
-    - out.stat.exists == False
-
-- meta: flush_handlers          
-
-- debug: var=out
-
-- name: Check if CRC is installed
-  stat:
-    path: "{{ crc_install_dir }}/crc"
-  notify:
-    - Create crc install dir
-    - Extract crc into install dir
-    - Set crc binary
-    - Create install symlink
-    - Update executable symlink
-  register: out 
-  changed_when:
-    - out.stat.exists == False  
+    - Delete existing crc VM    
+    - Print out
+  changed_when: crc_update.user_input | bool  
 
 - meta: flush_handlers        
 
-- debug: var=out
-- debug: var=crc_path
+- name: Download and configure new CRC
+  debug: var=crc_update
+  notify:
+    - Download CRC
+    - Create crc install dir
+    - Extract crc into install dir
+    - Add pull secret
+    - Set crc binary
+    - Print out
+  changed_when: crc_update.user_input | bool
+
+- meta: flush_handlers          
+
+- name: Setup and initialise CRC
+  stat:
+    path: "{{ crc_install_dir }}/crc"
+  notify:
+    - Create install symlink
+    - Update executable symlink
+    - Setup crc
+    - Print out
+  register: out 
+  changed_when: (out.stat.exists == False) or 
+                (crc_update.user_input | bool)
+
+- meta: flush_handlers        
+
+
+- name: Check is oc installed
+  shell: command -v oc >/dev/null 2>&1
+  register: is_oc_exist
+  ignore_errors: yes
+  changed_when: false
+
+- name: Add oc to PATH
+  shell: eval $(crc oc-env)
+  when: is_oc_exist.rc != 0
+
+- name: Add aliases to profile
+  blockinfile:  
+    path: "{{ profile_path }}"
+    state: present
+    marker: "# {mark} Ansible Managed aliases for CRC"    
+    block: "{{ lookup('template', 'crcaliases.j2') }}"
+
 
 
