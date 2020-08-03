@@ -63,6 +63,13 @@
     backup: yes
   become: yes    
 
+- name: Restart docker  
+  service: 
+    name: docker
+    state: restarted
+  register: out  
+  become: yes
+
 - name: Setup crc
   shell: "crc version && crc setup && crc start -p {{ crc_install_dir }}/pullsecret"
   register: out  

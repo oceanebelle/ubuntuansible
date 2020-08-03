@@ -57,6 +57,8 @@
     path: /etc/docker/daemon.json
   notify:
     - Add docker daemon.json
+    - Restart docker
+    - Print out
   register: out 
   changed_when:
   - out.stat.exists == False 
