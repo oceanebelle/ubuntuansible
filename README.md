@@ -30,5 +30,5 @@ Items
 - [x] Add Ubuntu snap packages for most used tools
 - [x] Add refresh for snap packages
 - [x] Add docker
-- [ ] Add crc 
+- [x] Add crc 
 - [ ] Use inventories directory structure
