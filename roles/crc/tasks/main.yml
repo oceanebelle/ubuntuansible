@@ -52,6 +52,16 @@
 
 - meta: flush_handlers        
 
+- name: Check if docker daemon.json is present to expose crc registry
+  stat:
+    path: /etc/docker/daemon.json
+  notify:
+    - Add docker daemon.json
+  register: out 
+  changed_when:
+  - out.stat.exists == False 
+
+- meta: flush_handlers          
 
 - name: Check is oc installed
   shell: command -v oc >/dev/null 2>&1

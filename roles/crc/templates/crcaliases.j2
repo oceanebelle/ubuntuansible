@@ -9,4 +9,6 @@ alias oc-login-adm-creds='crc console --credentials | sed -n "s/.*run '"'"'\(.*\
 alias oc-login-dev='$(oc-login-dev-creds)'
 alias oc-login-adm='$(oc-login-adm-creds)'
 
+alias oc-docker-login='docker login -u $(oc whoami) -p $(oc whoami -t) default-route-openshift-image-registry.apps-crc.testing'
+
 alias crc-start='crc start && oc-login-dev && oc status'
