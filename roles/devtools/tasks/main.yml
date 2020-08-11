@@ -1,11 +1,10 @@
 ---
-- name: Install apps
+- name: Install snap apps
   become: yes
   snap:
-    classic: yes
     name: 
-      - postman
-      - dbeaver-ce     
+      - xmind
+      
 
 - name: Install snap apps with classic confinement
   become: yes
@@ -14,6 +13,8 @@
     name: 
       - code
       - intellij-idea-community
+      - postman
+      - dbeaver-ce     
   
 - name: Check for updates from snap
   become: yes

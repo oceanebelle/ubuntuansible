@@ -1,0 +1,14 @@
+- name: "Update pi environment"
+  hosts: raspberrypi
+  remote_user: pi  
+  gather_facts: yes
+
+  vars:
+    maven_home: "{{ lookup('env','MAVEN_HOME') }}"
+    java_home: "{{ lookup('env','JAVA_HOME') }}"
+    profile_path: "~/.profile"
+
+  roles:
+    - role: common
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    

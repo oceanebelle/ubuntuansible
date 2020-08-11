@@ -22,27 +22,12 @@
     
 - meta: flush_handlers  
 
-- name: Install packages
-  when: cansudo is not changed
-  apt:
-    pkg:
-    - vim
-    - curl
-    - wget
-    - keepassxc
-    - git
-    - thrift-compiler
-    state: present
-  become: yes
-  
-
 - name: Check if ssh exists
   stat:
     path: ~/.ssh
   notify:
     - add ssh directory
     - add ssh authorized_keys
-    - add ssh config
   register: ssh_details 
   changed_when:
     - ssh_details.stat.exists == False 
@@ -52,18 +37,20 @@
 
 - meta: flush_handlers      
 
+- name: Check ssh config exist
+  stat:
+    path: ~/.ssh/config
+  notify:
+    - add ssh config
+  register: ssh_details 
+  changed_when:
+    - ssh_details.stat.exists == False 
 
-- name: setup git block
-  blockinfile: 
-    path: "{{ profile_path }}"
-    state: present
-    marker: "# {mark} Ansible Managed git prompt"
-    block: "{{ lookup('template', 'gitprompt.j2') }}"
+- meta: flush_handlers      
 
-
-- name: Add aliases to profile
+- name: Add ssh config
   blockinfile:  
-    path: "{{ profile_path }}"
+    path: "/home/{{ ansible_user }}/.ssh/config"
     state: present
-    marker: "# {mark} Ansible Managed aliases"    
-    block: "{{ lookup('template', 'aliases.j2') }}"
+    marker: "# {mark} Ansible Managed config"    
+    block: "{{ lookup('template', 'config.j2') }}"    

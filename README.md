@@ -22,7 +22,13 @@ ansible-vault create foo.yml
 
 # Running ansible script for crc
 ansible-playbook ubuntucrc.yml --ask-vault-pass
+
+# Running ansible playbook on raspberry pi
+ansible-playbook -i inventories/pi/hosts pi.yml
 ```
+
+
+
 
 Items
 - [x] Add common apt libraries
@@ -31,4 +37,5 @@ Items
 - [x] Add refresh for snap packages
 - [x] Add docker
 - [x] Add crc 
+- [x] Run ansible playbooks on a remote host (pi)
 - [ ] Use inventories directory structure
