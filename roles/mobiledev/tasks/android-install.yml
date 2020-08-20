@@ -1,0 +1,58 @@
+---
+- name: Android SDK | Install dependencies
+  apt:
+    name: "{{ android_sdk_dependencies }}"
+    state: present
+    install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
+  become: yes  
+
+# - name: Android SDK | Ensure Android SDK group
+#   group:
+#     name: "{{ android_sdk_group }}"
+
+# - name: Android SDK | Ensure Android SDK user
+#   user:
+#     name: "{{ android_sdk_user }}"
+#     group: "{{ android_sdk_group }}"
+#     home: "{{ android_sdk_user_home | default(omit) }}"
+#     shell: "{{ android_sdk_user_shell | default(omit) }}"
+
+- name: Android SDK | Ensure main android sdk root dirs exists
+  file:
+    path: "{{ android_sdk_install_dir }}"
+    mode: 0755
+    owner: "{{ android_sdk_user }}"
+    group: "{{ android_sdk_group }}"
+    state: directory
+  become: yes
+
+- name: Android SDK | Ensure cmdline-tools exist
+  file:
+    path: "{{ android_sdk_install_dir }}/cmdline-tools"
+    mode: 0755
+    owner: "{{ android_sdk_user }}"
+    group: "{{ android_sdk_group }}"
+    state: directory
+  become: yes  
+
+- name: Android SDK | Download and extract commandlinetools zip - new
+  unarchive:
+    src: "{{ android_sdk_url }}/{{ android_sdk_commandlinetools }}"
+    dest: "{{ android_sdk_install_dir }}/cmdline-tools"
+    owner: "{{ android_sdk_user }}"
+    group: "{{ android_sdk_group }}"
+    remote_src: true
+
+- name: Android SDK | Set android SDK
+  blockinfile: 
+    path: "{{ profile_path }}"
+    state: present
+    marker: "# {mark} Ansible Managed Android"    
+    block: |
+      ANDROID_HOME={{ android_sdk_install_dir }}
+      export ANDROID_HOME={{ android_sdk_install_dir }}
+      ANDROID_SDK_ROOT={{ android_sdk_install_dir }}
+      export ANDROID_SDK_ROOT={{ android_sdk_install_dir }}
+      export PATH=$PATH:{{ android_sdk_install_dir }}/cmdline-tools/tools/bin

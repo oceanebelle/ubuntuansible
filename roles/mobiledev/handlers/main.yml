@@ -1,0 +1,43 @@
+---
+- name: Download Flutter
+  get_url:
+    url: "{{ flutter_url }}"
+    dest: "{{ flutter_tmp_file }}"
+  register: out  
+
+
+- name: Create flutter dir
+  file:
+    path: "{{ flutter_install_dir }}"  
+    state: directory
+    mode: "u=rw,g=wx,o=rwx"
+  become: yes  
+
+- name: Extract flutter into install dir
+  unarchive:
+    src: "{{ flutter_tmp_file }}"
+    dest: "{{ flutter_install_dir }}" 
+    list_files: yes
+  register: out
+
+
+- name: Download Android SDK
+  get_url:
+    url: "{{ android_url }}"
+    dest: "{{ android_tmp_file }}"
+  register: out  
+
+
+- name: Create android dir
+  file:
+    path: "{{ android_install_dir }}"  
+    state: directory
+    mode: "u=rw,g=wx,o=rwx"
+  become: yes  
+
+- name: Extract flutter into install dir
+  unarchive:
+    src: "{{ android_tmp_file }}"
+    dest: "{{ android_install_dir }}" 
+    list_files: yes
+  register: out

@@ -2,16 +2,7 @@
   hosts: localhost
   connection: local
   gather_facts: yes
-  tags: crc
-
-  vars:
-    crc_url: "https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
-    crc_tmp_file: "/tmp/crc-linux-amd64.tar.xz"
-    crc_checksum: "sha1:5d0b48ac6a38450f1ef07d016eda36d9edbc9a4c"
-    crc_install_dir: "/usr/lib/openshift"
-    crc_executable: "/usr/bin/crc"
-    crc_path: "/home/oceane/openshift/crc-linux-1.11.0-amd64/crc"
-    profile_path: "~/.profile"
+  tags: crc  
 
   roles:
     - role: crc

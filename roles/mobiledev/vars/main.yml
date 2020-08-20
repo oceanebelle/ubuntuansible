@@ -1,0 +1,54 @@
+---
+android_sdk_url: https://dl.google.com/android/repository
+android_sdk_commandlinetools: commandlinetools-linux-6609375_latest.zip
+
+android_sdk_install_dir: /usr/lib/android-sdk
+
+android_sdk_build_tools: 28.0.3
+
+android_sdk_user: oceane
+android_sdk_group: oceane
+
+#android_sdk_versions: []
+# Example:
+# - android-28
+android_sdk_versions: 
+  - android-28
+
+# List available packages via: sdkmanager --list
+#android_sdk_system_images: []
+# Example:
+# - system-images;android-28;google_apis;x86
+android_sdk_system_images: 
+  - system-images;android-30;google_apis;x86_64
+
+#android_sdk_emulators: []
+# Example:
+# - name: API_28
+#   image: system-images;android-28;google_apis;x86
+#   skin: Nexus 5X
+#   sdcard: 1024M
+
+# List available skins via: avdmanager --list device
+android_sdk_emulators: 
+- name: API_30
+  image: system-images;android-30;google_apis;x86_64
+  skin: pixel_3
+  sdcard: 1024M
+
+android_sdk_dependencies:
+  - unzip  
+  - adb
+
+android_sdk_sdkmanager: "{{ android_sdk_install_dir }}/cmdline-tools/tools/bin/sdkmanager"
+android_sdk_avdmanager: "{{ android_sdk_install_dir }}/cmdline-tools/tools/bin/avdmanager"
+
+android_url: "https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
+android_tmp_file: "/tmp/flutter_linux_1.20.2-stable.tar.xz"
+android_install_dir: "/usr/lib/flutter-sdk"    
+
+flutter_url: "https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
+flutter_tmp_file: "/tmp/flutter_linux_1.20.2-stable.tar.xz"
+flutter_install_dir: "/usr/lib/flutter-sdk"
+
+

@@ -3,7 +3,7 @@
   connection: local
   gather_facts: yes
 
-  vars:
+  vars:        
     maven_home: "{{ lookup('env','MAVEN_HOME') }}"
     java_home: "{{ lookup('env','JAVA_HOME') }}"
     profile_path: "~/.profile"
@@ -14,4 +14,6 @@
     - role: commondev
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'  
     - role: java
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'    
+    - role: mobiledev
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'    

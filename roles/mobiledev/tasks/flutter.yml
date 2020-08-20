@@ -1,0 +1,22 @@
+---
+
+- name: Download and configure Flutter
+  stat:
+    path: "{{ flutter_install_dir }}/flutter"
+  register: out
+  notify:
+    - Download Flutter
+    - Create flutter dir
+    - Extract flutter into install dir    
+  changed_when:
+    - out.stat.exists == False 
+
+- meta: flush_handlers    
+
+- name: set flutter sdk
+  blockinfile: 
+    path: "{{ profile_path }}"
+    state: present
+    marker: "# {mark} Ansible Managed Flutter"    
+    block: |
+      export PATH="$PATH:{{ flutter_install_dir }}/flutter/bin"
