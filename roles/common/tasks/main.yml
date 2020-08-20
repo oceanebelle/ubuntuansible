@@ -15,10 +15,13 @@
     name: "*"
     state: latest
   become: yes
+  register: out
   notify: 
     - upgrade apt
     - clean apt
     - remove apt 
+
+- debug: var=out.stdout_lines
     
 - meta: flush_handlers  
 
