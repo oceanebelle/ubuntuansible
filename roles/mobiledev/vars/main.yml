@@ -43,9 +43,9 @@ android_sdk_dependencies:
 android_sdk_sdkmanager: "{{ android_sdk_install_dir }}/cmdline-tools/tools/bin/sdkmanager"
 android_sdk_avdmanager: "{{ android_sdk_install_dir }}/cmdline-tools/tools/bin/avdmanager"
 
-android_url: "https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
-android_tmp_file: "/tmp/flutter_linux_1.20.2-stable.tar.xz"
-android_install_dir: "/usr/lib/flutter-sdk"    
+# android_url: "https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
+# android_tmp_file: "/tmp/flutter_linux_1.20.2-stable.tar.xz"
+# android_install_dir: "/usr/lib/flutter-sdk"    
 
 flutter_url: "https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
 flutter_tmp_file: "/tmp/flutter_linux_1.20.2-stable.tar.xz"
