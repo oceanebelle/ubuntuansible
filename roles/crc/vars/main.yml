@@ -1,8 +1,17 @@
 ---
+# The crc checksum may have changed. update here
 crc_url: "https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
 crc_tmp_file: "/tmp/crc-linux-amd64.tar.xz"
-crc_checksum: "sha1:5d0b48ac6a38450f1ef07d016eda36d9edbc9a4c"
+
+# If a new crc version is available, the checksum will fail
+crc_checksum: "sha1:8360c752a0f388e48296254629a25917f3465267"
+
+# download location. clear old version of crc here
 crc_install_dir: "/usr/lib/openshift"
+
 crc_executable: "/usr/bin/crc"
+
+# This path is overridden to the version downloaded
 crc_path: "/home/oceane/openshift/crc-linux-1.11.0-amd64/crc"
+
 profile_path: "~/.profile"

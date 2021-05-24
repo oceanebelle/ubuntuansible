@@ -20,7 +20,7 @@ ansible-playbook site.yml --skip-tags=desktop
 # creating encrypted files
 ansible-vault create foo.yml
 
-# Running ansible script for crc
+# Running ansible script for crc - the pullsecret is encrypted and requires the password
 ansible-playbook ubuntucrc.yml --ask-vault-pass
 
 # Running ansible playbook on raspberry pi
