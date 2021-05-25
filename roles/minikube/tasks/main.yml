@@ -42,12 +42,17 @@
 
 - meta: flush_handlers
 
-- name: Install kubectl from snap
+- name: Install kubectl and helm from snap
   become: yes
   snap:
     classic: yes
     name: 
       - kubectl
+      - helm
+
+- name: Update snap package
+  become: yes
+  command: snap refresh kubectl helm        
 
 - name: Add aliases to profile
   blockinfile:  
