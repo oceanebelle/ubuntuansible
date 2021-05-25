@@ -1,0 +1,5 @@
+---
+minikube_url: "https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb"
+minikube_tmp_file: "/tmp/minikube_latest_amd64.deb"
+
+profile_path: "~/.profile"

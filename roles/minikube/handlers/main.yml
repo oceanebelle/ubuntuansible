@@ -1,0 +1,91 @@
+---
+- name: Remove minikube
+  become: true
+  apt:
+    pkg: minikube
+    state: absent
+    purge: yes   
+  register: out
+
+- name: Remove old Minikube
+  file:
+    path: "{{ minikube_tmp_file }}"
+    state: absent
+  register: out  
+
+- name: Download Minikube
+  uri:
+    url: "{{ minikube_url }}"
+    dest: "{{ minikube_tmp_file }}"    
+    follow_redirects: all
+    force: true
+  register: out  
+
+
+- name: Install Minikube
+  become: true
+  apt:
+    deb: "{{ minikube_tmp_file }}"
+    state: present
+  register: out
+
+- name: Extract crc into install dir
+  unarchive:
+    src: "{{ crc_tmp_file }}"
+    dest: "{{ crc_install_dir }}" 
+    list_files: yes
+  register: out
+
+- name: Add pull secret
+  template:
+    src: pullsecret
+    dest: "{{ crc_install_dir }}/pullsecret"
+    mode: '0644'
+    backup: yes  
+
+- name: Set crc binary
+  set_fact: 
+    crc_path: "{{ crc_install_dir }}/{{ out.files | select('match', '^.+/crc$') | list | join }}"
+
+- name: Create install symlink
+  file:
+    src: "{{ crc_path }}"
+    dest: "{{ crc_install_dir }}/crc"
+    state: link
+    force: yes
+    mode: u+rwx    
+
+- name: Update executable symlink
+  file:
+    src: "{{ crc_install_dir }}/crc"
+    dest: "{{ crc_executable }}"
+    state: link
+    force: yes
+  register: out  
+  become: yes
+
+- name: Add docker daemon.json
+  template:
+    src: etc-docker-daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: '0644'
+    backup: yes
+  become: yes    
+
+- name: Restart docker  
+  service: 
+    name: docker
+    state: restarted
+  register: out  
+  become: yes
+
+- name: Setup crc
+  shell: "crc version && crc setup && crc start -p {{ crc_install_dir }}/pullsecret"
+  register: out  
+
+
+- name: Print out
+  debug: var=out  
+
+
+    

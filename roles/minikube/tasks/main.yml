@@ -1,0 +1,60 @@
+---
+- name: Install packages required by minikube
+  apt:
+    pkg:
+    - qemu-kvm
+    - libvirt-daemon
+    - libvirt-daemon-system
+    - network-manager
+    state: present
+  become: yes
+
+- name: Confirm updating of Minikube
+  pause: 
+    prompt: "Do you want to download and update your Minikube? (yes/no)"  
+  register: minikube_update
+
+- name: Cleanup old Minikube VM
+  debug: var=minikube_update
+  notify:
+    - Remove minikube
+    - Print out
+  changed_when: minikube_update.user_input | bool  
+
+- meta: flush_handlers        
+
+- name: Download Minikube
+  debug: var=minikube_update
+  notify:
+    - Remove old Minikube
+    - Download Minikube    
+    - Print out
+  changed_when: minikube_update.user_input | bool
+
+- meta: flush_handlers
+
+- name: Install Minikube
+  debug: var=minikube_update
+  notify:
+    - Install Minikube    
+    - Print out
+  changed_when: minikube_update.user_input | bool
+
+- meta: flush_handlers
+
+- name: Install kubectl from snap
+  become: yes
+  snap:
+    classic: yes
+    name: 
+      - kubectl
+
+- name: Add aliases to profile
+  blockinfile:  
+    path: "{{ profile_path }}"
+    state: present
+    marker: "# {mark} Ansible Managed aliases for Minikube"    
+    block: "{{ lookup('template', 'minikubealiases.j2') }}"
+
+
+

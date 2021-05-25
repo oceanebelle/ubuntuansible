@@ -1,0 +1,9 @@
+- name: "Setup minikube"
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags: minikube  
+
+  roles:
+    - role: minikube
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'

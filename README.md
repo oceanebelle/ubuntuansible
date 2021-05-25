@@ -25,6 +25,9 @@ ansible-playbook ubuntucrc.yml --ask-vault-pass
 
 # Running ansible playbook on raspberry pi
 ansible-playbook -i inventories/pi/hosts pi.yml
+
+# Running ansible playbook to install minikube (crc alternative) for experimenting with Kubernetes
+ansible-playbook ubuntuminikube.yml
 ```
 
 
