@@ -52,7 +52,7 @@
 
 - name: Update snap package
   become: yes
-  command: snap refresh kubectl helm        
+  command: snap refresh kubectl helm 
 
 - name: Add aliases to profile
   blockinfile:  
