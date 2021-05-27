@@ -1,10 +1,10 @@
 ---
 android_sdk_url: https://dl.google.com/android/repository
-android_sdk_commandlinetools: commandlinetools-linux-6609375_latest.zip
+android_sdk_commandlinetools: commandlinetools-linux-7302050_latest.zip
 
 android_sdk_install_dir: /usr/lib/android-sdk
 
-android_sdk_build_tools: 28.0.3
+android_sdk_build_tools: 31.0.0-rc4
 
 android_sdk_user: oceane
 android_sdk_group: oceane
@@ -13,7 +13,7 @@ android_sdk_group: oceane
 # Example:
 # - android-28
 android_sdk_versions: 
-  - android-28
+  - android-29
 
 # List available packages via: sdkmanager --list
 #android_sdk_system_images: []
@@ -40,15 +40,13 @@ android_sdk_dependencies:
   - unzip  
   - adb
 
-android_sdk_sdkmanager: "{{ android_sdk_install_dir }}/cmdline-tools/tools/bin/sdkmanager"
-android_sdk_avdmanager: "{{ android_sdk_install_dir }}/cmdline-tools/tools/bin/avdmanager"
+android_sdk_sdkmanager: "{{ android_sdk_install_dir }}/cmdline-tools/cmdline-tools/bin/sdkmanager"
+android_sdk_avdmanager: "{{ android_sdk_install_dir }}/cmdline-tools/cmdline-tools/bin/avdmanager"
 
-# android_url: "https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
-# android_tmp_file: "/tmp/flutter_linux_1.20.2-stable.tar.xz"
-# android_install_dir: "/usr/lib/flutter-sdk"    
 
-flutter_url: "https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
-flutter_tmp_file: "/tmp/flutter_linux_1.20.2-stable.tar.xz"
+# Flutter
+flutter_url: "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.2.0-stable.tar.xz"
+flutter_tmp_file: "/tmp/flutter_linux_2.2.0-stable.tar.xz"
 flutter_install_dir: "/usr/lib/flutter-sdk"
 
 

@@ -8,16 +8,6 @@
     cache_valid_time: 3600
   become: yes  
 
-# - name: Android SDK | Ensure Android SDK group
-#   group:
-#     name: "{{ android_sdk_group }}"
-
-# - name: Android SDK | Ensure Android SDK user
-#   user:
-#     name: "{{ android_sdk_user }}"
-#     group: "{{ android_sdk_group }}"
-#     home: "{{ android_sdk_user_home | default(omit) }}"
-#     shell: "{{ android_sdk_user_shell | default(omit) }}"
 
 - name: Android SDK | Ensure main android sdk root dirs exists
   file:
@@ -45,6 +35,12 @@
     group: "{{ android_sdk_group }}"
     remote_src: true
 
+- name: Android SDK | Create symlink
+  file:
+    src: "{{ android_sdk_install_dir }}/cmdline-tools/cmdline-tools"
+    dest: "{{ android_sdk_install_dir }}/cmdline-tools/latest"
+    state: link
+
 - name: Android SDK | Set android SDK
   blockinfile: 
     path: "{{ profile_path }}"
@@ -55,4 +51,4 @@
       export ANDROID_HOME={{ android_sdk_install_dir }}
       ANDROID_SDK_ROOT={{ android_sdk_install_dir }}
       export ANDROID_SDK_ROOT={{ android_sdk_install_dir }}
-      export PATH=$PATH:{{ android_sdk_install_dir }}/cmdline-tools/tools/bin
+      export PATH=$PATH:{{ android_sdk_install_dir }}/cmdline-tools/cmdline-tools/bin

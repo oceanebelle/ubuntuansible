@@ -28,6 +28,11 @@ ansible-playbook -i inventories/pi/hosts pi.yml
 
 # Running ansible playbook to install minikube (crc alternative) for experimenting with Kubernetes
 ansible-playbook ubuntuminikube.yml
+
+# Update ubuntu mobile dev tools
+ansible-playbook ubuntumobiledev.yml
+
+
 ```
 
 

@@ -1,4 +1,17 @@
 ---
+- name: Install required packages
+  apt:
+    pkg:
+    - bash
+    - curl
+    - file    
+    - git
+    - xz-utils
+    - zip
+    - libglu1-mesa
+    state: present
+  register: out    
+  become: yes
 
 - name: Download and configure Flutter
   stat:
