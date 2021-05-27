@@ -40,8 +40,8 @@ android_sdk_dependencies:
   - unzip  
   - adb
 
-android_sdk_sdkmanager: "{{ android_sdk_install_dir }}/cmdline-tools/cmdline-tools/bin/sdkmanager"
-android_sdk_avdmanager: "{{ android_sdk_install_dir }}/cmdline-tools/cmdline-tools/bin/avdmanager"
+android_sdk_sdkmanager: "{{ android_sdk_install_dir }}/cmdline-tools/latest/bin/sdkmanager"
+android_sdk_avdmanager: "{{ android_sdk_install_dir }}/cmdline-tools/latest/bin/avdmanager"
 
 
 # Flutter
