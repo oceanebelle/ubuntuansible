@@ -4,7 +4,7 @@ crc_url: "https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-l
 crc_tmp_file: "/tmp/crc-linux-amd64.tar.xz"
 
 # If a new crc version is available, the checksum will fail
-crc_checksum: "sha1:8360c752a0f388e48296254629a25917f3465267"
+crc_checksum: "sha1:949a339774d51fb20feefaa8edbb1bb8a88440e3"
 
 # download location. clear old version of crc here
 crc_install_dir: "/usr/lib/openshift"

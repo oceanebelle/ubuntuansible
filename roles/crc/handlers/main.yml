@@ -1,6 +1,6 @@
 ---
 - name: Delete existing crc VM
-  shell: crc version && crc -f delete
+  shell: crc version && crc delete -f
   register: out
   ignore_errors: yes
 
