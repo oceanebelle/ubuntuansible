@@ -28,6 +28,8 @@
 - name: Download and configure new CRC
   debug: var=crc_update
   notify:
+    - Get CRC Checksum
+    - Set CRC Checksum
     - Download CRC
     - Create crc install dir
     - Extract crc into install dir

@@ -4,12 +4,21 @@
   register: out
   ignore_errors: yes
 
+- name: Get CRC Checksum
+  uri:
+    url: "{{ crc_check_url }}"
+    return_content: true
+  register: url_sha256
+
+- name: Set CRC Checksum
+  set_fact:
+    crc_checksum: "{{ url_sha256.content.split('  ')[0] }}"
 
 - name: Download CRC
   get_url:
     url: "{{ crc_url }}"
     dest: "{{ crc_tmp_file }}"
-    checksum: "{{ crc_checksum }}"
+    checksum: "sha256:{{ crc_checksum }}"
   register: out  
 
 
